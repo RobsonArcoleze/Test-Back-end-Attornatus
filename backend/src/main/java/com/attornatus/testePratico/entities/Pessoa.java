@@ -1,8 +1,8 @@
 package com.attornatus.testePratico.entities;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -23,7 +23,7 @@ public class Pessoa {
 	private LocalDate dataDeNascimento;
 	
 	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.DETACH)
-	private Set<Endereco> enderecos = new HashSet<>();
+	private List<Endereco> enderecos = new ArrayList<>();
 	
 	public Pessoa() {
 	}
@@ -58,7 +58,7 @@ public class Pessoa {
 		this.dataDeNascimento = dataDeNascimento;
 	}
 
-	public Set<Endereco> getEnderecos() {
+	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
 	
