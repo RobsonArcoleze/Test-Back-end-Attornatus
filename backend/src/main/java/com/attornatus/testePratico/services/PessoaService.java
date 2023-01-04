@@ -18,13 +18,11 @@ public class PessoaService {
 	private PessoaRepository repository;
 	
 	
-	//private EnderecoRepository enderecoRepository;
-	
 	@Transactional(readOnly = true)
 	public PessoaDTO findById(Long id) {
 		Pessoa pessoa = repository.findById(id).orElseThrow(
 				() -> new ResourceNotFoundException("Recurso não encontrado"));
-		return new PessoaDTO(pessoa);
+		return new PessoaDTO(pessoa, pessoa.getEnderecos());
 	}
 	
 	@Transactional(readOnly = true)
@@ -38,8 +36,10 @@ public class PessoaService {
 		Pessoa entity = new Pessoa();
 		copyDtoToEntity (dto, entity);
 		entity = repository.save(entity);
+	 
 		return new PessoaDTO(entity);
 	}
+	
 	
 	
 	
@@ -49,7 +49,7 @@ public class PessoaService {
 
 		pessoaEntity.setNome(pessoaDto.getNome());
 		pessoaEntity.setDataDeNascimento(pessoaDto.getDataDeNascimento());
-			
+								
 	}
 }
 	
