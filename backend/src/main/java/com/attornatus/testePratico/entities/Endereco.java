@@ -18,6 +18,7 @@ public class Endereco {
 	private String logradouro;
 	private Integer cep;
 	private Integer numero;
+	private String cidade;
 	
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "pessoa_id", referencedColumnName = "id", nullable = true)
@@ -26,12 +27,13 @@ public class Endereco {
 	public Endereco() {
 	}
 
-		public Endereco(Long id, String logradouro, Integer cep, Integer numero, Pessoa pessoa) {
+		public Endereco(Long id, String logradouro, Integer cep, Integer numero, Pessoa pessoa, String cidade) {
 		this.id = id;
 		this.logradouro = logradouro;
 		this.cep = cep;
 		this.numero = numero;
 		this.pessoa = pessoa;
+		this.cidade = cidade;
 	}
 
 	public Long getId() {
@@ -73,4 +75,13 @@ public class Endereco {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+	
 }
