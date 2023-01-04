@@ -10,20 +10,23 @@ import com.attornatus.testePratico.entities.Pessoa;
 public class PessoaDTO {
 
 	private Long id;
-	private String name;
+	private String nome;
 	private LocalDate dataDeNascimento;
 	
 	private List<EnderecoDTO> enderecos = new ArrayList<>();
 	
-	public PessoaDTO(Long id, String name, LocalDate dataDeNascimento) {
+	public PessoaDTO() {
+	}
+	
+	public PessoaDTO(Long id, String nome, LocalDate dataDeNascimento) {
 		this.id = id;
-		this.name = name;
+		this.nome = nome;
 		this.dataDeNascimento = dataDeNascimento;
 	}
 	
 	public PessoaDTO(Pessoa entity) {
 		id = entity.getId();
-		name = entity.getName();
+		nome = entity.getNome();
 		dataDeNascimento = entity.getDataDeNascimento();
 	}
 	
@@ -36,8 +39,8 @@ public class PessoaDTO {
 		return id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNome() {
+		return nome;
 	}
 
 	public LocalDate getDataDeNascimento() {
