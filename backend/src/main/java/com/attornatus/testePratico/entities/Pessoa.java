@@ -1,9 +1,10 @@
 package com.attornatus.testePratico.entities;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,18 +19,18 @@ public class Pessoa {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
+	private String nome;
 	private LocalDate dataDeNascimento;
 	
-	@OneToMany(mappedBy = "pessoa")
-	private List<Endereco> enderecos = new ArrayList<>();
+	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.DETACH)
+	private Set<Endereco> enderecos = new HashSet<>();
 	
 	public Pessoa() {
 	}
 
-	public Pessoa(Long id, String name, LocalDate dataDeNascimento) {
+	public Pessoa(Long id, String nome, LocalDate dataDeNascimento) {
 		this.id = id;
-		this.name = name;
+		this.nome = nome;
 		this.dataDeNascimento = dataDeNascimento;
 	}
 
@@ -42,11 +43,11 @@ public class Pessoa {
 	}
 
 	public String getName() {
-		return name;
+		return nome;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String nome) {
+		this.nome = nome;
 	}
 
 	public LocalDate getDataDeNascimento() {
@@ -57,7 +58,7 @@ public class Pessoa {
 		this.dataDeNascimento = dataDeNascimento;
 	}
 
-	public List<Endereco> getEnderecos() {
+	public Set<Endereco> getEnderecos() {
 		return enderecos;
 	}
 	

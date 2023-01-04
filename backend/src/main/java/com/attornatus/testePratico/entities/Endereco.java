@@ -19,8 +19,8 @@ public class Endereco {
 	private Integer cep;
 	private Integer numero;
 	
-	@ManyToOne
-	@JoinColumn(name = "pessoa_id")
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "pessoa_id", referencedColumnName = "id", nullable = true)
 	private Pessoa pessoa;
 	
 	public Endereco() {
