@@ -1,6 +1,8 @@
 package com.attornatus.testePratico.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,11 +17,39 @@ public class PessoaService {
 	@Autowired
 	private PessoaRepository repository;
 	
+	
+	//private EnderecoRepository enderecoRepository;
+	
 	@Transactional(readOnly = true)
 	public PessoaDTO findById(Long id) {
 		Pessoa pessoa = repository.findById(id).orElseThrow(
 				() -> new ResourceNotFoundException("Recurso não encontrado"));
-		return new PessoaDTO(pessoa, pessoa.getEnderecos());
+		return new PessoaDTO(pessoa);
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<PessoaDTO> findAllPaged(Pageable pageable){
+		Page <Pessoa> list = repository.findAll(pageable);
+		return list.map(x -> new PessoaDTO(x));
+	}
+	
+	@Transactional
+	public PessoaDTO insert(PessoaDTO dto) {
+		Pessoa entity = new Pessoa();
+		copyDtoToEntity (dto, entity);
+		entity = repository.save(entity);
+		return new PessoaDTO(entity);
+	}
+	
+	
+	
+	
+	
+	private void copyDtoToEntity(PessoaDTO pessoaDto, Pessoa pessoaEntity) {
+
+		pessoaEntity.setNome(pessoaDto.getNome());
+		pessoaEntity.setDataDeNascimento(pessoaDto.getDataDeNascimento());
+			
 	}
 }
 	
