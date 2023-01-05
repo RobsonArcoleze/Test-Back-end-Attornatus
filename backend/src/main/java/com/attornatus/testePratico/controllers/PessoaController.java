@@ -56,4 +56,5 @@ public class PessoaController {
 		dto = service.insertEndereco(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}
-}
+	
+	}

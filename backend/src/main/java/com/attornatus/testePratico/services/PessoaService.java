@@ -66,12 +66,18 @@ public class PessoaService {
 	
 	@Transactional
 	public PessoaDTO insertEndereco(Long id, PessoaDTO dto) {
+		try {
 		Pessoa entity = repository.getReferenceById(id);
 		copyEnderecoDtoToEntity(dto, entity); 
 		entity = repository.save(entity);
 		return new PessoaDTO(entity);
+		}
+		catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("ID not found" + id);
+		}
 	}
 	
+		
 	private void copyDtoToEntity(PessoaDTO dto, Pessoa entity) {
 
 		entity.setNome(dto.getNome());
