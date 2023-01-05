@@ -11,6 +11,8 @@ import com.attornatus.testePratico.entities.Pessoa;
 import com.attornatus.testePratico.repositories.PessoaRepository;
 import com.attornatus.testePratico.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class PessoaService {
 
@@ -40,7 +42,18 @@ public class PessoaService {
 		return new PessoaDTO(entity);
 	}
 	
-	
+	@Transactional
+	public PessoaDTO update(Long id, PessoaDTO dto) {
+		try {
+			Pessoa entity = repository.getReferenceById(id);
+			copyDtoToEntity (dto, entity);
+			entity = repository.save(entity);
+			return new PessoaDTO(entity);
+		}
+		catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("ID not found" + id);
+		}
+	}
 	
 	
 	
