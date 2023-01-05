@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "719f7e15-0366-4b23-ba60-5cff432311e1",
+		"name": "Test Pratico",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "24512550"
+	},
+	"item": [
+		{
+			"name": "Pessoa com endereços By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/pessoas/2"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Pessoas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/pessoas?size=5&page=0&sort=id,asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pessoas"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "5"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "sort",
+							"value": "id,asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Nova Pessoa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n    \"nome\": \"Antonio José\",\n    \"dataDeNascimento\": \"2001-07-25\",\n    \"enderecos\": [\n        {\n            \"logradouro\": \"Rua Canário\",\n            \"cep\": 1234567,\n            \"numero\": 25,\n            \"cidade\": \"SP\"\n        }\n    ]\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/pessoas"
+			},
+			"response": []
+		},
+		{
+			"name": "Insert novo endereço",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \n    \"enderecos\": [\n        {\n            \"logradouro\": \"Rua Canário\",\n            \"cep\": 1234567,\n            \"numero\": 25,\n            \"cidade\": \"SP\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/pessoas/2"
+			},
+			"response": []
+		},
+		{
+			"name": "Pessoa",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n    \"nome\": \"Antonio José\",\n    \"dataDeNascimento\": \"2001-07-25\",\n    \"enderecos\": [\n        {\n            \"logradouro\": \"Rua Canário\",\n            \"cep\": 1234567,\n            \"numero\": 25,\n            \"cidade\": \"SP\"\n        },\n        {\n            \"logradouro\": \"Rua Canário\",\n            \"cep\": 1234567,\n            \"numero\": 25,\n            \"cidade\": \"SP\"\n        }\n    ]\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/pessoas/1"
+			},
+			"response": []
+		}
+	]
+}
