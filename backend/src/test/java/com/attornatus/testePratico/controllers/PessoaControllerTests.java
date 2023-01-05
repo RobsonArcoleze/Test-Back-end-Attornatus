@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import com.attornatus.testePratico.DTO.PessoaDTO;
 import com.attornatus.testePratico.services.PessoaService;
+import com.attornatus.testePratico.services.exceptions.ResourceNotFoundException;
 import com.attornatus.testePratico.tests.Factory;
 
 
@@ -34,14 +35,21 @@ public class PessoaControllerTests {
 	
 	private PageImpl<PessoaDTO> page;
 	private PessoaDTO pessoaDTO;
+	private Long existingId;
+	private Long nonExistingId;
 	
 	@BeforeEach
 	void setUp() throws Exception{
 		
+		existingId = 1L;
+		nonExistingId = 2L;
 		pessoaDTO = Factory.createdPessoaDTO(); 
 		page = new PageImpl<>(List.of(pessoaDTO));
 		
 		when(service.findAllPaged( ArgumentMatchers.any())).thenReturn(page);
+		when(service.findById(existingId)).thenReturn(pessoaDTO);
+		when(service.findById(nonExistingId)).thenThrow(ResourceNotFoundException.class);
+		
 	}
 	
 	@Test
@@ -51,6 +59,24 @@ public class PessoaControllerTests {
 				);
 		
 		result.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void findByIdShouldReturnPessoaDtoWhenIdExists() throws Exception {
+		ResultActions result = mockMvc.perform(get("/pessoas/{id}", existingId)
+				.accept(MediaType.APPLICATION_JSON)	
+					);
+		
+		result.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void findByIdShouldReturnResourceNotFoundExceptionWhenIdDoesNotExists() throws Exception {
+		ResultActions result = mockMvc.perform(get("/pessoas/{id}", nonExistingId)
+				.accept(MediaType.APPLICATION_JSON)	
+					);
+		
+		result.andExpect(status().isNotFound());
 	}
 }
 
