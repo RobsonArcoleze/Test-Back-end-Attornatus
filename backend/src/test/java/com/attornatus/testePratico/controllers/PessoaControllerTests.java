@@ -1,7 +1,11 @@
 package com.attornatus.testePratico.controllers;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
@@ -21,6 +25,7 @@ import com.attornatus.testePratico.DTO.PessoaDTO;
 import com.attornatus.testePratico.services.PessoaService;
 import com.attornatus.testePratico.services.exceptions.ResourceNotFoundException;
 import com.attornatus.testePratico.tests.Factory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
@@ -29,6 +34,9 @@ public class PessoaControllerTests {
 
 	@Autowired
 	private MockMvc mockMvc;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 	
 	@MockBean
 	private PessoaService service;
@@ -47,8 +55,12 @@ public class PessoaControllerTests {
 		page = new PageImpl<>(List.of(pessoaDTO));
 		
 		when(service.findAllPaged( ArgumentMatchers.any())).thenReturn(page);
+		
 		when(service.findById(existingId)).thenReturn(pessoaDTO);
 		when(service.findById(nonExistingId)).thenThrow(ResourceNotFoundException.class);
+		
+		when(service.update(eq(existingId), any())).thenReturn(pessoaDTO);
+		when(service.update(eq(nonExistingId), any())).thenThrow(ResourceNotFoundException.class);
 		
 	}
 	
@@ -73,6 +85,32 @@ public class PessoaControllerTests {
 	@Test
 	public void findByIdShouldReturnResourceNotFoundExceptionWhenIdDoesNotExists() throws Exception {
 		ResultActions result = mockMvc.perform(get("/pessoas/{id}", nonExistingId)
+				.accept(MediaType.APPLICATION_JSON)	
+					);
+		
+		result.andExpect(status().isNotFound());
+	}
+	@Test
+	public void updateShouldReturnProductDtoWhenIdExists() throws Exception{
+		
+		String jsonBody = objectMapper.writeValueAsString(pessoaDTO);
+		
+		ResultActions result = mockMvc.perform(put("/pessoas/{id}", existingId)
+				.content(jsonBody)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)	
+					);
+		
+		result.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void updateShouldReturnResourceNotFoundExceptionWhenIdDoesNotExist() throws Exception{
+String jsonBody = objectMapper.writeValueAsString(pessoaDTO);
+		
+		ResultActions result = mockMvc.perform(put("/pessoas/{id}", nonExistingId)
+				.content(jsonBody)
+				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)	
 					);
 		
