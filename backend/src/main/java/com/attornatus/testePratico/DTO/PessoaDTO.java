@@ -30,6 +30,7 @@ public class PessoaDTO {
 		dataDeNascimento = entity.getDataDeNascimento();
 	}
 	
+	
 	public PessoaDTO(Pessoa entity, List<Endereco> endereco) {
 		this(entity);
 		endereco.forEach(end -> this.enderecos.add(new EnderecoDTO(end)));
