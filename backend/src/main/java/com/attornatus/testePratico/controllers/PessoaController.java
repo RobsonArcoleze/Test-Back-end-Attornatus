@@ -51,4 +51,9 @@ public class PessoaController {
 		return ResponseEntity.ok().body(dto);
 	}
 	
+	@PostMapping(value = "/{id}")
+	public ResponseEntity<PessoaDTO> insertEndereco(@PathVariable Long id, @RequestBody PessoaDTO dto){
+		dto = service.insertEndereco(id, dto);
+		return ResponseEntity.ok().body(dto);
+	}
 }

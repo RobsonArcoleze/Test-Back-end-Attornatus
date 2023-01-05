@@ -64,11 +64,33 @@ public class PessoaService {
 		}
 	}
 	
+	@Transactional
+	public PessoaDTO insertEndereco(Long id, PessoaDTO dto) {
+		Pessoa entity = repository.getReferenceById(id);
+		copyEnderecoDtoToEntity(dto, entity); 
+		entity = repository.save(entity);
+		return new PessoaDTO(entity);
+	}
+	
 	private void copyDtoToEntity(PessoaDTO dto, Pessoa entity) {
 
 		entity.setNome(dto.getNome());
 		entity.setDataDeNascimento(dto.getDataDeNascimento());
 		
+		List<Endereco> ends = new ArrayList<>();
+		ends = dto.getEnderecos().stream().map(e -> {
+            Endereco end = new Endereco();
+            end.setCep(e.getCep());
+            end.setCidade(e.getCidade());
+            end.setLogradouro(e.getLogradouro());
+            end.setNumero(e.getNumero());
+            end.setPessoa(entity);
+            return end;
+        }).collect(Collectors.toList());
+		ends = enderecoRepository.saveAll(ends);
+	}
+	
+	private void copyEnderecoDtoToEntity(PessoaDTO dto, Pessoa entity) {
 		List<Endereco> ends = new ArrayList<>();
 		ends = dto.getEnderecos().stream().map(e -> {
             Endereco end = new Endereco();
