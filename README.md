@@ -24,7 +24,7 @@ Esta aplicação foi desenvolvida de acordo com a arquitetura de camadas.
 
 ![Arquitetura](https://github.com/RobsonArcoleze/Test-Back-end-Attornatus/blob/main/img/ArquiteturaCamadas.png)
 
-## Modelo COnceitual
+## Modelo Conceitual
 
 ![Modelo conceitual](https://github.com/RobsonArcoleze/Test-Back-end-Attornatus/blob/main/img/modeloConceitualjpeg)
 
