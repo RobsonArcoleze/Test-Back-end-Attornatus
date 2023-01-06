@@ -1,6 +1,16 @@
 # Test Back-end Attornatus 
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/devsuperior/sds1-wmazoni/blob/master/LICENSE) 
 
+# Respostas do teste
+
+1) Durante a implementação de uma nova funcionalidade de software solicitada, quais critérios você avalia e implementa para garantia de qualidade de software?
+Resposta:
+	Caso seja uma implementação de uma nova funcionalidade em andamento, faria uma refatoração do código, para garantir a qualidade e desempenho, como exemplo uma busca de uma tabela gigante no banco de dados sem ter a necessidade. Aplicaria testes unitários para ter a certeza que cada funcionalidade esteja de acordo com o esperado!
+ 
+ 2) Em qual etapa da implementação você considera a qualidade de software?
+	Resposta:
+		Acredito que a qualidade do software deve ser considerada desde o levantamento de requisitos até que este software chegue em produção. Durante todo esse processo deve-se prezar por sua qualidade!
+
 # Sobre o projeto
 
 Este teste foi criado para o processo seletivo de desenvolvedor back-end junior da empresa Attornatus.
